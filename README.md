@@ -19,6 +19,13 @@ numbers to any of these encodings or `Buffer` objects.
 
 This library is built as a wrapper around the awesome [decimal.js-light](https://github.com/MikeMcl/decimal.js-light) library.
 
+### Installation
+```bash
+npm install bn-str-256
+# or
+yarn add bn-str-256
+```
+
 ### Examples
 ```js
 const bn = require('bn-str-256');
