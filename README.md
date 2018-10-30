@@ -98,7 +98,7 @@ bn.split('-34.99'); // { sign: '-', integer: '34', decimal: '99' }
 ### All Functions
 | name (*alias*) | description |
 |----------------|-------------|
-| **parse** (*expand*) | convert a Number, exponential string, hex/octal/binary-encoded string, or buffer object into a decimal string |
+| `parse(x)` (*expand*) | convert a Number, exponential string, hex/octal/binary-encoded string, or buffer object into a decimal string |
 | `add(a, b)` (*plus*) | Add `a` and `b` |
 | `sub(a, b)` (*minus*) | Subtract `b` from `a` |
 | `mul(a, b)` (*times*) | Multiply `a` and `b` |
