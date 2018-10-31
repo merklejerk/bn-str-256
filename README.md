@@ -135,3 +135,5 @@ bn.split('-34.99'); // { sign: '-', integer: '34', decimal: '99' }
 | `toBuffer(x)` | Convert `x` to a `Buffer` object |
 | `toBuffer(x, size)` | Convert `x` to a `Buffer` object, and either truncate or left-pad it to `size` bytes |
 | `toNumber(x)` | Convert `x` to a native `Number` type. Precision loss may occur. |
+| `toBits(x)` | Convert `x` to an array of `1`s and `0`s representing its bits. |
+| `toBits(x, length)` | Convert `x` to bit array and either truncate or left-pad it to `length` digits |

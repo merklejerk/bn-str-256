@@ -81,6 +81,25 @@ function baseEncode(d, digits, length=null) {
 	return r;
 }
 
+function toBits(d, length=null) {
+	d = toDecimal(d);
+	if (d.dp() > 0 || d.lt(0))
+		throw new Error(`Can only bit encode positive integers`);
+	length = length || 0;
+	// Construct bits in reverse.
+	let bits = [];
+	do {
+		if (length > 0 && bits.length >= length)
+			break;
+		bits.push(d.mod(2).toint().toNumber());
+		d = d.idiv(2);
+	} while (d.gt(0)) ;
+	// Pad.
+	while (bits.length < length)
+		bits.push(0);
+	return _.reverse(bits);
+}
+
 function expand(v) {
 	return toDecimal(v).toFixed();
 }
@@ -271,5 +290,6 @@ module.exports = {
 	toBinary: toBinary,
 	toOctal: toOctal,
 	toBuffer: toBuffer,
-	toNumber: toNumber
+	toNumber: toNumber,
+	toBits: toBits
 };
