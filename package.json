@@ -1,6 +1,6 @@
 {
 	"name": "bn-str-256",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"description": "Simple, functional big number library for up to 256-bit (32-byte) numbers that outputs decimal strings, with hex, binary, octal, and Buffer decoding/encoding.",
 	"main": "src/index.js",
 	"repository": "https://github.com/merklejerk/bn-str",
