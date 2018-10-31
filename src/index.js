@@ -100,6 +100,10 @@ function toBits(d, length=null) {
 	return _.reverse(bits);
 }
 
+function fromBits(bits) {
+	return expand('0b' + bits.join(''));
+}
+
 function expand(v) {
 	return toDecimal(v).toFixed();
 }
@@ -291,5 +295,6 @@ module.exports = {
 	toOctal: toOctal,
 	toBuffer: toBuffer,
 	toNumber: toNumber,
-	toBits: toBits
+	toBits: toBits,
+	fromBits: fromBits
 };

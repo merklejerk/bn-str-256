@@ -1,5 +1,5 @@
 ![build status](https://travis-ci.org/merklejerk/bn-str-256.svg?branch=master)
-![npm package](https://badge.fury.io/js/bn-str-256.svg)
+[![npm package](https://badge.fury.io/js/bn-str-256.svg)](https://www.npmjs.com/package/bn-str-256)
 
 # **bn-str-256**
 A simple, functional library for big number math,
@@ -137,3 +137,4 @@ bn.split('-34.99'); // { sign: '-', integer: '34', decimal: '99' }
 | `toNumber(x)` | Convert `x` to a native `Number` type. Precision loss may occur. |
 | `toBits(x)` | Convert `x` to an array of `1`s and `0`s representing its bits. |
 | `toBits(x, length)` | Convert `x` to bit array and either truncate or left-pad it to `length` digits |
+| `fromBits(bits)` | Convert a `bits` array of `1`s and `0`s to a number |

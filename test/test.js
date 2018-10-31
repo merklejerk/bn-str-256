@@ -111,6 +111,11 @@ describe('bn-str-256', function() {
 		assert.equal(bn.expand(buf), '4910210853121048192949129121');
 	});
 
+	it ('can parse a bit array', function() {
+		const bits = '010111010110100111'.split('').map(ch => parseInt(ch));
+		assert.equal(bn.fromBits(bits), '95655');
+	});
+
 	it ('can encode a big hexadecimal', function() {
 		const big = '215792049237316361234570985008687907853269984665640564039457584007913129639935';
 		const hex = '0x1dd15f8bb014588cfb22bfa30d4741c6488961feb661730d2bdffffffffffffff';
