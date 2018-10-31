@@ -2,8 +2,24 @@
 const _ = require('lodash');
 const _Decimal = require('decimal.js-light');
 
-// 415 digits of ln(10).
-const LN10 = '2.302585092994045684017991454684364207601101488628772976033327900967572609677352480235997205089598298341967784042286248633409525465082806756666287369098781689482907208325554680843799894826233198528393505308965377732628846163366222287698219886746543667474404243274365155048934314939391479619404400222105101714174800368808401264708068556774321622835522011480466371565912137345074785694768346361679210180644507064800027';
+const PRECISION = 120;
+
+// 300 digits of E
+const E =
+'2.718281828459045235360287471352662497757247093699959574966967627724076630' +
+'35354759457138217852516642742746639193200305992181741359662904357290033429' +
+'52605956307381323286279434907632338298807531952510190115738341879307021540' +
+'89149934884167509244761460668082264800168477411853742345442437107539077744' +
+'99207';
+
+// 500 digits of LN10
+const LN10 =
+'2.302585092994045684017991454684364207601101488628772976033327900967572609' +
+'67735248023599720508959829834196778404228624863340952546508280675666628736' +
+'90987816894829072083255546808437998948262331985283935053089653777326288461' +
+'63366222287698219886746543667474404243274365155048934314939391479619404400' +
+'22211';
+
 const Decimal = _Decimal.clone({precision: 120, LN10: LN10});
 const HEX_REGEX = /^0x[0-9a-f]*$/i;
 const BIN_REGEX = /^0b[01]*$/i;
@@ -23,7 +39,7 @@ const BIN_DIGIT_VALUES =
 
 function toDecimal(v) {
 	if (_.isNaN(v) || _.isNil(v))
-		throw new Error(`Cannot parse number "${v}"`);
+		throw new Error('Cannot parse number "${v}"');
 	if (v instanceof Decimal)
 		return v;
 	if (typeof(v) == 'string') {
@@ -68,7 +84,7 @@ function toBinary(v, length=null) {
 function baseEncode(d, digits, length=null) {
 	const base = digits.length;
 	if (d.dp() > 0 || d.lt(0))
-		throw new Error(`Can only base-${base} encode positive integers`);
+		throw new Error('Can only base-${base} encode positive integers');
 	length = length || 0;
 	let r = '';
 	do {
@@ -86,7 +102,7 @@ function baseEncode(d, digits, length=null) {
 function toBits(d, length=null) {
 	d = toDecimal(d);
 	if (d.dp() > 0 || d.lt(0))
-		throw new Error(`Can only bit encode positive integers`);
+		throw new Error('Can only bit encode positive integers');
 	length = length || 0;
 	// Construct bits in reverse.
 	let bits = [];
@@ -230,6 +246,13 @@ function pow(x, y) {
 	return x.pow(y).toFixed();
 }
 
+function log(x, base) {
+	x = toDecimal(x);
+	if (_.isNil(base))
+		base = toDecimal(E);
+	return x.log(base).toFixed();
+}
+
 function toBuffer(v, size) {
 	let hex = toHex(v, size ? size*2 : null).substr(2);
 	if (hex.length % 2)
@@ -303,6 +326,8 @@ module.exports = {
 	abs: abs,
 	pow: pow,
 	sqrt: (x) => pow(x, 0.5),
+	log: log,
+	ln: (x) => log(x),
 	raise: pow,
 	split: split,
 	sign: sign,
@@ -315,5 +340,7 @@ module.exports = {
 	toBuffer: toBuffer,
 	toNumber: toNumber,
 	toBits: toBits,
-	fromBits: fromBits
+	fromBits: fromBits,
+	E: E.substr(0, 1+PRECISION),
+	LN10: LN10.substr(0, 1+PRECISION)
 };

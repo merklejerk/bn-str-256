@@ -107,6 +107,8 @@ bn.split('-34.99'); // { sign: '-', integer: '34', decimal: '99' }
 | `idiv(a, b)` | Divide `a` by `b` and return the integer portion |
 | `mod(a, b)` | `a` modulo `b` |
 | `pow(x, y)` (*raise*) | Raise `x` to the `y` power |
+| `log(x)` (*ln*) | Natural logarithm of `x` |
+| `log(x, base)` | Logarithm of `x` with base `y` |
 | `int(x)` | Return the integer portion of `x` (no rounding) |
 | `round(x)` | Round `x` to an integer |
 | `sum(...args)` | Sum all arguments |
