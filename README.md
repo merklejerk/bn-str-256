@@ -3,8 +3,7 @@
 
 # **bn-str-256**
 A simple, functional library for big number math,
-with up to 80 digits of precision, suitable for 256-bit/32-byte numbers used in
-domains like blockchain.
+with up to 120 digits of precision, more than suitable for working with 256-bit/32-byte numbers used in domains like blockchain.
 
 What sets this apart from other big number libraries is a very simple
 functional syntax where most operations result in a **decimal
@@ -73,6 +72,8 @@ bn.lte(320, 321); // true
 bn.min('1294.31221944', '5.421e6'); // '1294.31221944'
 // Take the maximum of two values.
 bn.min('1294.31221944', '5.421e6'); // '5421000'
+// Clamp a value to within an interval.
+bn.min('1600', '1294.31221944', '5.421e6'); // '1600'
 
 // Just parse a hex value.
 bn.parse('0x49121') // '299297'
@@ -114,6 +115,7 @@ bn.split('-34.99'); // { sign: '-', integer: '34', decimal: '99' }
 | `sqrt(x)` | Take the square root of `x` |
 | `max(a, b)` | Take the maximum of `a` and `b` |
 | `min(a, b)` | Take the minimum of `a` and `b` |
+| `clamp(x, l, h)` | Clamp `x` to be within `l` and `h`, inclusive |
 | `sd(x)` | Get the number of significant digits of `x` |
 | `sd(x, n)` | Set the number of significant digits of `x` to `n` |
 | `dp(x)` | Get the number of decimal places of `x` |

@@ -195,7 +195,8 @@ describe('bn-str-256', function() {
 	});
 
 	it ('can compute an irrational number', function() {
-		assert.equal(bn.pow(2, 0.5), '1.414213562373095048801688724209698078569671875376948073176679737990732478462107');
+		assert.equal(bn.pow(2, 0.5),
+			'1.41421356237309504880168872420969807856967187537694807317667973799073247846210703885038753432764157273501384623091229702');
 	});
 
 	it ('can count significant digits', function() {
@@ -265,7 +266,7 @@ describe('bn-str-256', function() {
 	it ('can divide two numbers', function() {
 		assert.equal(
 			bn.div('304995912158948192180120121', '9409019585412120501214'),
-			'32415.270197951149740236538807583548219780021448800472459819699572958121538007362');
+			'32415.2701979511497402365388075835482197800214488004724598196995729581215380073626652063640217827097211425745858858951443');
 	});
 
 	it ('can divide two numbers into an integer', function() {
@@ -282,12 +283,12 @@ describe('bn-str-256', function() {
 
 	it ('can raise to a negative integer power', function() {
 		assert.equal(bn.pow('-41', '-2'),
-			'0.00059488399762046400951814396192742415229030339083878643664485425342058298631766805');
+			'0.000594883997620464009518143961927424152290303390838786436644854253420582986317668054729327781082688875669244497323022010707');
 	});
 
 	it ('can raise to a negative decimal power', function() {
 		assert.equal(bn.pow('41', '-2.5'),
-			'0.00009290527179572044350035863778270502843139855969328679046341858978639576846239718');
+			'0.0000929052717957204435003586377827050284313985596932867904634185897863957684623971804571807475551699766859275377969529923138');
 	});
 
 	it ('raising a negative number to a fraction throws', function() {
@@ -296,26 +297,26 @@ describe('bn-str-256', function() {
 
 	it ('positive times negative is negative', function() {
 		assert.equal(
-			bn.mul('304995912158948192180120121', '-9409019585412120501214'),
-			'-2869712510974178241410260911937900084633246326894');
+			bn.sign(bn.mul('304995912158948192180120121', '-9409019585412120501214')),
+			-1);
 	});
 
 	it ('negative times negative is positive', function() {
 		assert.equal(
-			bn.mul('-304995912158948192180120121', '-9409019585412120501214'),
-			'2869712510974178241410260911937900084633246326894');
+			bn.sign(bn.mul('-304995912158948192180120121', '-9409019585412120501214')),
+			1);
 	});
 
 	it ('positive divided by negative is negative', function() {
 		assert.equal(
-			bn.div('304995912158948192180120121', '-9409019585412120501214'),
-			'-32415.270197951149740236538807583548219780021448800472459819699572958121538007362');
+			bn.sign(bn.div('304995912158948192180120121', '-9409019585412120501214')),
+			-1);
 	});
 
 	it ('negative divided by negative is positive', function() {
 		assert.equal(
-			bn.div('-304995912158948192180120121', '-9409019585412120501214'),
-			'32415.270197951149740236538807583548219780021448800472459819699572958121538007362');
+			bn.sign(bn.div('-304995912158948192180120121', '-9409019585412120501214')),
+			1);
 	});
 
 	it ('anything divided by zero throws', function() {
@@ -331,20 +332,20 @@ describe('bn-str-256', function() {
 
 	it ('modulo of two negative numbers is negative', function() {
 		assert.equal(
-			bn.mod('-304995912158948192180120121', '-9409019585412120501214'),
-			'-2542297814306133268311');
+			bn.sign(bn.mod('-304995912158948192180120121', '-9409019585412120501214')),
+			-1);
 	});
 
 	it ('modulo of a positive and negative is positive', function() {
 		assert.equal(
-			bn.mod('304995912158948192180120121', '-9409019585412120501214'),
-			'2542297814306133268311');
+			bn.sign(bn.mod('304995912158948192180120121', '-9409019585412120501214')),
+			1);
 	});
 
 	it ('modulo of a negative and positive is negative', function() {
 		assert.equal(
-			bn.mod('-304995912158948192180120121', '9409019585412120501214'),
-			'-2542297814306133268311');
+			bn.sign(bn.mod('-304995912158948192180120121', '9409019585412120501214')),
+			-1);
 	});
 
 	it ('can modulo with decimals', function() {
@@ -431,5 +432,12 @@ describe('bn-str-256', function() {
 	it ('can take the maximum of two numbers', function() {
 		assert.equal(bn.max('491', '491.41'), '491.41');
 		assert.equal(bn.max('-491.001', '-491.1'), '-491.001');
+	});
+
+	it ('can clamp numbers', function() {
+		assert.equal(bn.clamp('32', '491', '491.41'), '491');
+		assert.equal(bn.clamp('3200', '491', '491.41'), '491.41');
+		assert.equal(bn.clamp('0', '8', '7'), '7');
+		assert.equal(bn.clamp('-491.05', '-491.001', '-491.1'), '-491.05');
 	});
 });
