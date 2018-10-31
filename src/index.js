@@ -37,6 +37,11 @@ const BIN_DIGITS =
 const BIN_DIGIT_VALUES =
 	_.zipObject(BIN_DIGITS, _.times(BIN_DIGITS.length));
 
+
+function _toInt(d) {
+	return d.todp(0, _Decimal.ROUND_DOWN);
+}
+
 function toDecimal(v) {
 	if (_.isNaN(v) || _.isNil(v))
 		throw new Error('Cannot parse number "${v}"');
@@ -91,7 +96,7 @@ function baseEncode(d, digits, length=null) {
 		if (length > 0 && r.length >= length)
 			break;
 		r = digits[d.mod(base)] + r;
-		d = d.idiv(base);
+		d = _toInt(d.div(base));
 	} while (d.gt(0)) ;
 	// Left pad.
 	if (r.length < length)
@@ -109,8 +114,8 @@ function toBits(d, length=null) {
 	do {
 		if (length > 0 && bits.length >= length)
 			break;
-		bits.push(d.mod(2).toint().toNumber());
-		d = d.idiv(2);
+		bits.push(_toInt(d.mod(2)).toNumber());
+		d = _toInt(d.div(2));
 	} while (d.gt(0)) ;
 	// Pad.
 	while (bits.length < length)
@@ -203,11 +208,11 @@ function clamp(x, lo, hi) {
 }
 
 function int(a) {
-	return toDecimal(a).toint().toFixed();
+	return _toInt(toDecimal(a));
 }
 
 function round(a) {
-	return toDecimal(a).todp(0).toFixed();
+	return toDecimal(a).todp(0, _Decimal.ROUND_HALF_UP).toFixed();
 }
 
 function abs(a) {
@@ -215,7 +220,7 @@ function abs(a) {
 }
 
 function idiv(a, b) {
-	return toDecimal(a).idiv(toDecimal(b)).toFixed();
+	return _toInt(toDecimal(a).div(toDecimal(b))).toFixed();
 }
 
 function sum(...vals) {

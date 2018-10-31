@@ -367,8 +367,8 @@ describe('bn-str-256', function() {
 	it ('can take the integer of numbers', function() {
 		assert.equal(bn.int(59312), '59312');
 		assert.equal(bn.int(-59312), '-59312');
-		assert.equal(bn.int('-59312.3144'), '-59312');
-		assert.equal(bn.int('59312.3144'), '59312');
+		assert.equal(bn.int('-59312.8144'), '-59312');
+		assert.equal(bn.int('59312.8144'), '59312');
 	});
 
 	it ('can round numbers', function() {
