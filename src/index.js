@@ -60,7 +60,8 @@ function toDecimal(v) {
 	}
 	else if (_.isBuffer(v)) {
 		return baseDecode(v.toString('hex').toLowerCase(), HEX_DIGIT_VALUES);
-	}
+	} else if (typeof(v) == 'boolean')
+		v = v ? 1 : 0;
 	return new Decimal(v);
 }
 

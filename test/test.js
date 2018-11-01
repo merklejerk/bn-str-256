@@ -44,6 +44,11 @@ describe('bn-str-256', function() {
 		assert.equal(bn.expand('1.44e3'), '1440');
 	});
 
+	it ('can parse a boolean', function() {
+		assert.equal(bn.expand(true), 1);
+		assert.equal(bn.expand(false), 0);
+	});
+
 	it ('can parse a very large integer', function() {
 		const big = '215792049237316361234570985008687907853269984665640564039457584007913129639935';
 		assert.equal(bn.expand(big), big);
