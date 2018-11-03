@@ -4,6 +4,14 @@ const assert = require('assert');
 const bn = require('../src/index');
 
 describe('bn-str-256', function() {
+	it ('throws parsing NaN', function() {
+		assert.throws(() => bn.expand(NaN));
+	});
+
+	it ('throws parsing a non-number string', function() {
+		assert.throws(() => bn.expand('foo'));
+	});
+
 	it ('can parse a positive integer', function() {
 		assert.equal(bn.expand(41258), '41258');
 	});

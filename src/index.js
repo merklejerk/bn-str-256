@@ -51,11 +51,18 @@ function _toInt(d) {
 	return d.todp(0, _Decimal.ROUND_DOWN);
 }
 
+class ParseError extends Error {
+	constructor(msg) {
+		super(msg);
+	}
+}
+
 function toDecimal(v) {
-	if (_.isNaN(v) || _.isNil(v))
-		throw new Error('Cannot parse number "${v}"');
 	if (v instanceof Decimal)
 		return v;
+	if (_.isNaN(v))
+		throw new ParseError('NaN is not a valid number.');
+	v = v || 0;
 	if (typeof(v) == 'string') {
 		// Catch hex encoding.
 		if (v.match(HEX_REGEX))
@@ -71,7 +78,11 @@ function toDecimal(v) {
 		return baseDecode(v.toString('hex').toLowerCase(), HEX_DIGIT_VALUES);
 	} else if (typeof(v) == 'boolean')
 		v = v ? 1 : 0;
-	return new Decimal(v);
+	try {
+		return new Decimal(v);
+	} catch (err) {
+		throw new ParseError(`Cannot parse "${v}" as a number`);
+	}
 }
 
 function baseDecode(s, digitValues) {
@@ -392,5 +403,6 @@ module.exports = {
 	fromBits: fromBits,
 	E: E.substr(0, 1+PRECISION),
 	LN10: LN10.substr(0, 1+PRECISION),
-	PI: PI.substr(0, 1+PRECISION)
+	PI: PI.substr(0, 1+PRECISION),
+	ParseError: ParseError
 };
