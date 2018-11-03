@@ -115,6 +115,7 @@ bn.split('-34.99'); // { sign: '-', integer: '34', decimal: '99' }
 | `neg(x)` (*negate*) | Negate `x` |
 | `abs(x)` | Take the absolute value of `x` |
 | `sqrt(x)` | Take the square root of `x` |
+| `exp(y)` | Raise the mathematical constant *e* to `y` |
 | `max(a, b)` | Take the maximum of `a` and `b` |
 | `min(a, b)` | Take the minimum of `a` and `b` |
 | `clamp(x, l, h)` | Clamp `x` to be within `l` and `h`, inclusive |
@@ -142,3 +143,5 @@ bn.split('-34.99'); // { sign: '-', integer: '34', decimal: '99' }
 | `toBits(x, length)` | Convert `x` to bit array and left truncate/pad it to `length` digits. If `length` is negative, the result will be right padded/truncated. |
 | `fromBits(bits)` | Convert a `bits` array of `1`s and `0`s to a number |
 | `toNumber(x)` | Convert `x` to a native `Number` type. Precision loss may occur. |
+| `E` | The mathematical constant *e* (`2.71828...`) |
+| `PI` | The mathematical constant *π* (`3.1415926...`) |
