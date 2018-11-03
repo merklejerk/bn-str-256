@@ -92,16 +92,28 @@ function baseEncode(d, digits, length=null) {
 	if (d.dp() > 0 || d.lt(0))
 		throw new Error('Can only base-${base} encode positive integers');
 	length = length || 0;
+	const L = Math.abs(length);
 	let r = '';
 	do {
-		if (length > 0 && r.length >= length)
-			break;
 		r = digits[d.mod(base)] + r;
 		d = _toInt(d.div(base));
 	} while (d.gt(0)) ;
-	// Left pad.
-	if (r.length < length)
-		return _.repeat(digits[0], length - r.length) + r;
+	if (L) {
+		if (r.length < L) {
+			// Pad.
+			const padding = _.repeat(digits[0], L - r.length);
+			if (length > 0)
+				r = padding + r;
+			else
+				r = r + padding;
+		} else if (r.length > L) {
+			// Truncate.
+			if (length > 0)
+				r = r.substr(r.length - L);
+			else
+				r = r.substr(0, L);
+		}
+	}
 	return r;
 }
 
@@ -110,18 +122,31 @@ function toBits(d, length=null) {
 	if (d.dp() > 0 || d.lt(0))
 		throw new Error('Can only bit encode positive integers');
 	length = length || 0;
+	const L = Math.abs(length);
 	// Construct bits in reverse.
 	let bits = [];
 	do {
-		if (length > 0 && bits.length >= length)
-			break;
 		bits.push(_toInt(d.mod(2)).toNumber());
 		d = _toInt(d.div(2));
 	} while (d.gt(0)) ;
-	// Pad.
-	while (bits.length < length)
-		bits.push(0);
-	return _.reverse(bits);
+	bits = _.reverse(bits);
+	if (L) {
+		if (bits.length < L) {
+			// Pad.
+			const padding = _.times(L - bits.length, i => 0);
+			if (length > 0)
+				bits = [...padding, ...bits];
+			else
+				bits = [...bits, ...padding];
+		} else if (bits.length > L) {
+			// Truncate.
+			if (length > 0)
+				bits = bits.slice(bits.length - L);
+			else
+				bits = bits.slice(0, L);
+		}
+	}
+	return bits;
 }
 
 function fromBits(bits) {
@@ -261,8 +286,12 @@ function log(x, base) {
 
 function toBuffer(v, size) {
 	let hex = toHex(v, size ? size*2 : null).substr(2);
-	if (hex.length % 2)
-		hex = '0' + hex;
+	if (hex.length % 2) {
+		if (size < 0)
+			hex = hex + '0';
+		else
+			hex = '0' + hex;
+	}
 	return Buffer.from(hex, 'hex');
 }
 

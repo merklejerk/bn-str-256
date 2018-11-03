@@ -131,14 +131,14 @@ bn.split('-34.99'); // { sign: '-', integer: '34', decimal: '99' }
 | `gte(a, b)` | Test if `a >= b` |
 | `lte(a, b)` | Test if `a <= b` |
 | `toHex(x)` | Convert `x` to a hex string (e.g., `0xf3abb`) |
-| `toHex(x, length)` | Convert `x` to a hex string and either truncate or left-pad it to `length` digits |
+| `toHex(x, length)` | Convert `x` to a hex string and left truncate/pad it to `length` digits. If `length` is negative, the result will be right padded/truncated. |
 | `toOctal(x)` | Convert `x` to an octal string (e.g., `04335`) |
-| `toOctal(x, length)` | Convert `x` to an octal string and either truncate or left-pad it to `length` digits |
+| `toOctal(x, length)` | Convert `x` to an octal string and left truncate/pad it to `length` digits. If `length` is negative, the result will be right padded/truncated. |
 | `toBinary(x)` | Convert `x` to a binary string (e.g., `0b10111010`)|
-| `toBinary(x, length)` | Convert `x` to a binary string and either truncate or left-pad it to `length` digits |
+| `toBinary(x, length)` | Convert `x` to a binary string and left truncate/pad it to `length` digits. If `length` is negative, the result will be right padded/truncated.  |
 | `toBuffer(x)` | Convert `x` to a `Buffer` object |
-| `toBuffer(x, size)` | Convert `x` to a `Buffer` object, and either truncate or left-pad it to `size` bytes |
-| `toNumber(x)` | Convert `x` to a native `Number` type. Precision loss may occur. |
+| `toBuffer(x, size)` | Convert `x` to a `Buffer` object, and left truncate/pad it to `size` bytes. If `size` is negative, the result will be right padded/truncated. |
 | `toBits(x)` | Convert `x` to an array of `1`s and `0`s representing its bits. |
-| `toBits(x, length)` | Convert `x` to bit array and either truncate or left-pad it to `length` digits |
+| `toBits(x, length)` | Convert `x` to bit array and left truncate/pad it to `length` digits. If `length` is negative, the result will be right padded/truncated. |
 | `fromBits(bits)` | Convert a `bits` array of `1`s and `0`s to a number |
+| `toNumber(x)` | Convert `x` to a native `Number` type. Precision loss may occur. |

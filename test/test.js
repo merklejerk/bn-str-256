@@ -146,57 +146,129 @@ describe('bn-str-256', function() {
 	});
 
 	it ('can encode a hexadecimal with truncated length', function() {
-		const n = '4910210853121048192949129121';
-		const hex = '0x38fa1';
+		const n = '0x123456781abcdef';
+		const hex = '0xbcdef';
 		assert.equal(bn.toHex(n, 5), hex);
 	});
 
+	it ('can encode a hexadecimal with negative truncated length', function() {
+		const n = '0x123456781abcdef';
+		const hex = '0x12345';
+		assert.equal(bn.toHex(n, -5), hex);
+	});
+
 	it ('can encode an octal with truncated length', function() {
-		const n = '4910210853121048192949129121';
-		const octal = '007641';
+		const n = '0441577321746712635410';
+		const octal = '035410';
 		assert.equal(bn.toOctal(n, 5), octal);
 	});
 
+	it ('can encode an octal with negative truncated length', function() {
+		const n = '0441577321746712635410';
+		const octal = '044157';
+		assert.equal(bn.toOctal(n, -5), octal);
+	});
+
 	it ('can encode a binary with truncated length', function() {
-		const n = '4910210853121048192949129121';
-		const bin = '0b00001';
+		const n = '0b1010101111110101100111101101101000101110';
+		const bin = '0b01110';
 		assert.equal(bn.toBinary(n, 5), bin);
 	});
 
+	it ('can encode a binary with negative truncated length', function() {
+		const n = '0b1010101111110101100111101101101000101110';
+		const bin = '0b10101';
+		assert.equal(bn.toBinary(n, -5), bin);
+	});
+
 	it ('can encode a bit array with truncated length', function() {
-		const n = '4910210853121048192949129121';
-		const bin = _.map('00001'.split(''), ch => parseInt(ch));
-		assert.deepEqual(bn.toBits(n, 5), bin);
+		const n = '0b1010101111110101100111101101101000101110';
+		const bin = '0101110';
+		assert.deepEqual(bn.toBits(n, 7).join(''), bin);
+	});
+
+	it ('can encode a bit array with negative truncated length', function() {
+		const n = '0b1010101111110101100111101101101000101110';
+		const bin = '1010101';
+		assert.deepEqual(bn.toBits(n, -7).join(''), bin);
 	});
 
 	it ('can encode a hexadecimal with padded length', function() {
-		const n = '3121048';
-		const hex = '0x00002f9f98';
+		const n = '0x12345';
+		const hex = '0x0000012345';
 		assert.equal(bn.toHex(n, 10), hex);
 	});
 
+	it ('can encode a hexadecimal with negative padded length', function() {
+		const n = '0x12345';
+		const hex = '0x1234500000';
+		assert.equal(bn.toHex(n, -10), hex);
+	});
+
 	it ('can encode an octal with padded length', function() {
-		const n = '3121048';
-		const octal = '0000013717630';
-		assert.equal(bn.toOctal(n, 12), octal);
+		const n = '034415';
+		const octal = '00000034415';
+		assert.equal(bn.toOctal(n, 10), octal);
+	});
+
+	it ('can encode an octal with negative padded length', function() {
+		const n = '034415';
+		const octal = '03441500000';
+		assert.equal(bn.toOctal(n, -10), octal);
 	});
 
 	it ('can encode a binary with padded length', function() {
-		const n = '3121048';
-		const bin = '0b00001011111001111110011000';
-		assert.equal(bn.toBinary(n, 26), bin);
+		const n = '0b11010';
+		const bin = '0b0000011010';
+		assert.equal(bn.toBinary(n, 10), bin);
+	});
+
+	it ('can encode a binary with negative padded length', function() {
+		const n = '0b11010';
+		const bin = '0b1101000000';
+		assert.equal(bn.toBinary(n, -10), bin);
 	});
 
 	it ('can encode a bit array with padded length', function() {
-		const n = '3121048';
-		const bin = '00001011111001111110011000'.split('').map(ch => parseInt(ch));
-		assert.deepEqual(bn.toBits(n, 26), bin);
+		const n = '0b101011101011111010';
+		const bin = '00000101011101011111010';
+		assert.equal(bn.toBits(n, 23).join(''), bin);
+	});
+
+	it ('can encode a bit array with negative padded length', function() {
+		const n = '0b101011101011111010';
+		const bin = '10101110101111101000000'
+		assert.equal(bn.toBits(n, -23).join(''), bin);
 	});
 
 	it ('can convert to a Buffer object', function() {
-		const n = '4910210853121048192949129121';
-		const hex = '0fdda197b73dd343fae38fa1';
+		const n = '0x123456781abcdef';
+		const hex = '0123456781abcdef';
 		assert.equal(bn.toBuffer(n).toString('hex'), hex);
+	});
+
+	it ('can convert to a Buffer object with truncated length', function() {
+		const n = '0x123456781abcdef';
+		const hex = 'abcdef';
+		assert.equal(bn.toBuffer(n, 3).toString('hex'), hex);
+	});
+
+	it ('can convert to a Buffer object with negative truncated length', function() {
+		const n = '0x123456781abcdef';
+		const hex = '123456';
+		assert.equal(bn.toBuffer(n, -3).toString('hex'), hex);
+	});
+
+	it ('can convert to a Buffer object with padded length', function() {
+		const n = '0x12345';
+		const hex = '00012345';
+		assert.equal(bn.toBuffer(n, 4).toString('hex'), hex);
+	});
+
+	it ('can convert to a Buffer object with negative padded length', function() {
+		const n = '0x12345';
+		const hex = '12345000';
+		assert.equal(bn.toBuffer(n, -4).toString('hex'), hex);
 	});
 
 	it ('can compute an irrational number', function() {
