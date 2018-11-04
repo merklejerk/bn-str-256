@@ -537,4 +537,9 @@ describe('bn-str-256', function() {
 		assert.equal(bn.log('256', 2), '8');
 		assert.equal(bn.log('256', 2.5), '6.05176637892824023545684288768378697593552088470408250238860074483851198485707263637033211363705848388736471019217409844');
 	});
+
+	it ('can convert to integer', function() {
+		assert.equal(bn.int('1234.5678'), '1234');
+		assert.equal(bn.int('-1234.5678'), '-1234');
+	});
 });

@@ -254,7 +254,7 @@ function clamp(x, lo, hi) {
 }
 
 function int(a) {
-	return _toInt(toDecimal(a));
+	return _toInt(toDecimal(a)).toFixed();
 }
 
 function round(a) {
